@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🔐 Next.js E2EE Visualizer
 
-## Getting Started
+E2EE Visualizer is a **visual and interactive demonstration** of how **End‑to‑End Encryption (E2EE)** works in modern web applications.  
+It runs **entirely client‑side** using the **Web Crypto API** and is built with **Next.js 15 (App Router)**, **TypeScript**, and **Framer Motion**.
 
-First, run the development server:
+> ✨ Goal: To help developers and learners clearly understand every stage of secure communication — from key generation to encryption, transmission, decryption, and signature verification.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🚀 Features
+
+- 🔑 **RSA‑OAEP (2048‑bit)** for AES key wrapping
+- ✍️ **RSA‑PSS (SHA‑256)** for signing and verifying ciphertexts
+- 🔒 **AES‑GCM (256‑bit)** for message encryption
+- 🤝 **Handshake simulation** (key publishing, fingerprint validation)
+- 📡 **Network visualization**: ciphertext, IV, wrapped key, signature
+- 🔁 **Bidirectional communication** — Alice ↔ Bob
+- 🧩 **Stepper flow**: Generate → Handshake → Encrypt → Send → Verify → Decrypt
+- 🌗 **Light/Dark themes** + **Framer Motion** animations
+- 🧠 Clean, modular architecture with separated logic (crypto / UI / hooks)
+
+---
+
+## 🧱 Project Structure
+
+```
+src/
+├─ app/
+│  └─ e2ee-visualizer/
+│     ├─ page.tsx
+│     ├─ components/
+│     │  ├─ EncryptDiagram.tsx
+│     │  ├─ KeyPanel.tsx
+│     │  ├─ StatusBar.tsx
+│     │  ├─ StepFlow.tsx
+│     │  ├─ HandshakePanel.tsx
+│     │  ├─ RoleSwitch.tsx
+│     │  ├─ ControlsBar.tsx
+│     │  ├─ MethodBadges.tsx
+│     │  ├─ Legend.tsx
+│     │  └─ InfoCallout.tsx
+│     └─ hooks/
+│        └─ useEncryptionFlow.ts
+│
+├─ lib/
+│  ├─ crypto/
+│  │  └─ e2ee.ts         # AES‑GCM + RSA‑OAEP + RSA‑PSS logic
+│  └─ sim/
+│     └─ directory.ts    # Simulated key directory (publish/fetch)
+│
+└─ styles/ (optional)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧩 Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Clone & install
 
-## Learn More
+```bash
+git clone https://github.com/onuremirza/e2ee-visualizer.git
+cd e2ee-visualizer
+pnpm install
+# or npm/yarn install
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 2. Run locally
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm dev
+# or npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Then open **http://localhost:3000/e2ee-visualizer**
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🐳 Run with Docker
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+A `docker-compose.yml` is included:
+
+```bash
+docker compose up --build
+```
+
+> This builds and runs the app inside a container, exposing port **80** → **3000**.
+
+---
+
+## 🧠 How It Works
+
+1. **Generate Keys:** Each actor (Alice & Bob) generates RSA‑OAEP (encryption) and RSA‑PSS (signature) key pairs.
+2. **Handshake:** Each publishes public keys to a simulated directory and verifies peer fingerprints (RFC‑7638 style).
+3. **Encrypt:** Alice encrypts a message using AES‑GCM, wraps the AES key with Bob’s RSA‑OAEP key, and signs ciphertext with RSA‑PSS.
+4. **Send:** The ciphertext, IV, wrapped key, and signature are “sent” through the visual network layer.
+5. **Decrypt & Verify:** Bob unwraps the AES key, verifies the RSA‑PSS signature, and decrypts the message.
+6. **Reverse:** The same process can occur in reverse (Bob → Alice).
+
+---
+
+## 🧩 Tech Stack
+
+- **Next.js 15** (App Router, TypeScript)
+- **Web Crypto API** (native browser cryptography)
+- **Framer Motion** for animations
+- **Tailwind CSS** + optional **shadcn/ui**
+- **ESLint + TypeScript strict**
+
+---
+
+## 🛡️ Disclaimer
+
+This project is intended for **educational and visualization purposes only**.  
+It does not perform secure key exchange or persistent storage.  
+Do not use it as-is in production systems.
+
+---
+
+## 📜 License
+
+MIT © 2025 Onur Emirza
