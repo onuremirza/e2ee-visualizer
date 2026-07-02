@@ -1,0 +1,9 @@
+services:
+  frontend:
+    build:
+      context: .
+    environment:
+      NODE_ENV: production
+    ports:
+      # host:container — host portu geliştirme ortamındaki çakışmaları önlemek için 3080'e alındı
+      - 3080:3000
