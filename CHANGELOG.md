@@ -3,6 +3,11 @@
 Format: [Keep a Changelog](https://keepachangelog.com) · SemVer.
 
 ## [Unreleased]
+### Güvenlik / Bağımlılık
+- **Next.js 15.5.6 → 16.2.10** (React 19.2, güvenlik yükseltmesi; `@next/codemod upgrade`).
+- ESLint flat-config `eslint-config-next@16`'nın native export'una geçirildi (FlatCompat kaldırıldı).
+- Transitive güvenlik açıkları giderildi (`npm audit`: 0 açık) — `postcss` >=8.5.10 override'ı dahil.
+
 ### Eklendi (görsel gelişim)
 - **Animasyonlu akış diyagramı** (`FlowDiagram`): gezen şifreli paket, akan SVG hatlar, adım-senkron glow, metin "scramble" şifrelenme efekti, kilit/açma durumu.
 - **Tema sistemi:** karanlık/aydınlık toggle (no-FOUC), kripto temalı palet + gradient başlık + grid/ışık arka plan.

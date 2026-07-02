@@ -46,7 +46,10 @@ export function useEncryptionFlow() {
   const [attacker, setAttacker] = useState(false); // ağ dinleme görünümü
   const [tamper, setTamper] = useState(false); // MITM: anahtar değiştirme
 
-  // URL'den başlangıç durumunu oku (paylaşılabilir demo linki)
+  // URL'den başlangıç durumunu oku (paylaşılabilir demo linki).
+  // Bilinçli: SSR/prerender ile hidrasyon uyuşmazlığını önlemek için mount SONRASI çalışır;
+  // window'a yalnızca istemcide erişilir, bu yüzden effect içindeki setState kasıtlıdır.
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     try {
       const p = new URLSearchParams(window.location.search);
@@ -60,6 +63,7 @@ export function useEncryptionFlow() {
       if (p.get("atk") === "1") setAttacker(true);
     } catch {}
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const [envAB, setEnvAB] = useState<Envelope | null>(null);
   const [envBA, setEnvBA] = useState<Envelope | null>(null);

@@ -33,11 +33,14 @@ export function Tour() {
   const [open, setOpen] = useState(false);
   const [i, setI] = useState(0);
 
+  // İlk ziyaret kontrolü localStorage'dan; mount sonrası çalışır (SSR-güvenli).
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     try {
       if (!localStorage.getItem(KEY)) setOpen(true);
     } catch {}
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   function close() {
     setOpen(false);

@@ -23,6 +23,9 @@ export function ScrambleText({
   const frame = useRef(0);
   const raf = useRef<number | null>(null);
 
+  // Görüntülenen metni prop'lara göre senkronlar / animasyonu sürer;
+  // effect içindeki setDisplay kasıtlıdır (RAF animasyon + prop-sync).
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (!encrypted) {
       setDisplay(text);
@@ -67,6 +70,7 @@ export function ScrambleText({
       if (raf.current) cancelAnimationFrame(raf.current);
     };
   }, [text, encrypted, reduce]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   return (
     <span className={`font-mono ${className}`} aria-hidden={encrypted}>

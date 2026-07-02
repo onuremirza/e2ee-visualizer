@@ -6,9 +6,12 @@ import { Moon, Sun } from "lucide-react";
 export function ThemeToggle() {
   const [dark, setDark] = useState<boolean | null>(null);
 
+  // Tema durumu istemcide (DOM class) tutulur; mount sonrası okunur (SSR-güvenli).
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     setDark(document.documentElement.classList.contains("dark"));
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   function toggle() {
     const next = !document.documentElement.classList.contains("dark");
